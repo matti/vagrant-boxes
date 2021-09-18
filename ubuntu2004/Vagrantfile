@@ -1,0 +1,16 @@
+require 'etc'
+
+Vagrant.configure('2') do |config|
+  config.vm.box = 'generic/ubuntu2004'
+
+  config.vm.provider 'parallels' do |prl|
+    prl.memory = 1024
+    prl.cpus = Etc.nprocessors
+    prl.update_guest_tools = true
+  end
+
+  config.vm.provision 'shell', inline: <<-SHELL
+    apt-get update
+    apt-get upgrade -y
+  SHELL
+end
